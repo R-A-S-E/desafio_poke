@@ -2,17 +2,16 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
 import 'package:pokemon_pad/src/core/failure.dart';
-import 'package:pokemon_pad/src/features/dashboard/data/models/pokemon_model.dart';
+import 'package:pokemon_pad/src/features/select_pokemon/data/models/select_pokemon_models.dart';
 
-class PokemonDatasource {
-  Future<Either<Failure, List<PokemonModel>>> getPokemon() async {
+class SelectPokemonDatasource {
+  Future<Either<Failure, SelectPokemonModel>> getPokemon(String url) async {
     var dio = Dio();
     try {
-      var response = await dio.get('https://pokeapi.co/api/v2/pokemon');
+      var response = await dio.get(url);
       if (response.statusCode == 200) {
-        final List<dynamic> body = await response.data['results'];
-
-        return Right(body.map((model) => PokemonModel.fromMap(model)).toList());
+        final dynamic data = await response.data;
+        return Right(SelectPokemonModel.fromMap(data));
       } else {
         return Left(
           Failure(

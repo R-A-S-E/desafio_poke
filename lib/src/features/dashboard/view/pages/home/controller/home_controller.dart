@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:pokemon_pad/src/core/failure.dart';
 import 'package:pokemon_pad/src/features/dashboard/domain/entites/pokemon.dart';
 import 'package:pokemon_pad/src/features/dashboard/domain/repositories/pokemon_repository.dart';
@@ -11,19 +12,17 @@ class HomeController {
 
   final List<Pokemon> pokemonList = [];
 
-  bool isLoading = false;
+  ValueNotifier<bool> isLoading = ValueNotifier<bool>(false);
 
   void getPokemon() async {
-    isLoading = true;
+    isLoading.value = true;
     var result = await getPokemons.getPokemon();
-
+    isLoading.value = false;
     return result.fold(
       (l) {
-        isLoading = false;
         Failure(message: l.message, statusCode: l.statusCode);
       },
       (r) {
-        isLoading = false;
         pokemonList.addAll(r);
       },
     );
