@@ -4,16 +4,14 @@ import 'dart:convert';
 import 'package:pokemon_pad/src/features/dashboard/domain/entites/pokemon.dart';
 
 class PokemonModel extends Pokemon {
-  PokemonModel({required int id, required String name, required String url})
-      : super(id: id, name: name, url: url);
+  PokemonModel({required String name, required String url})
+      : super(name: name, url: url);
 
   PokemonModel copyWith({
-    int? id,
     String? name,
     String? url,
   }) {
     return PokemonModel(
-      id: id ?? this.id,
       name: name ?? this.name,
       url: url ?? this.url,
     );
@@ -21,7 +19,6 @@ class PokemonModel extends Pokemon {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
       'name': name,
       'url': url,
     };
@@ -29,7 +26,6 @@ class PokemonModel extends Pokemon {
 
   factory PokemonModel.fromMap(Map<String, dynamic> map) {
     return PokemonModel(
-      id: map['id'] as int,
       name: map['name'] as String,
       url: map['url'] as String,
     );
@@ -41,15 +37,15 @@ class PokemonModel extends Pokemon {
       PokemonModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() => 'PokemonModel(id: $id, name: $name, url: $url)';
+  String toString() => 'PokemonModel(name: $name, url: $url)';
 
   @override
   bool operator ==(covariant PokemonModel other) {
     if (identical(this, other)) return true;
 
-    return other.id == id && other.name == name && other.url == url;
+    return other.name == name && other.url == url;
   }
 
   @override
-  int get hashCode => id.hashCode ^ name.hashCode ^ url.hashCode;
+  int get hashCode => name.hashCode ^ url.hashCode;
 }

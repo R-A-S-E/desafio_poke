@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:pokemon_pad/src/features/dashboard/view/pages/home/controller/home_controller.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -8,11 +10,32 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final HomeController controller = GetIt.I<HomeController>();
+  @override
+  void initState() {
+    controller.getPokemon();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        backgroundColor: Colors.red,
+        title: const Text('Pokemons'),
+        centerTitle: true,
+      ),
+      body: ListView(
+        children: controller.pokemonList
+            .map(
+              (e) => ListTile(
+                  title: Text(e.name),
+                  //coisa feia só para colocar o ID fiz 2 replace
+                  trailing: Text(e.url
+                      .replaceFirst('https://pokeapi.co/api/v2/pokemon/', '')
+                      .replaceAll('/', ''))),
+            )
+            .toList(),
       ),
     );
   }
