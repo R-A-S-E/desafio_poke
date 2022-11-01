@@ -14,6 +14,8 @@ void registerDependencies() {
       () => PokemonRepositoryImpl(di.get()));
   di.registerLazySingleton<GetPokemonUseCase>(
       () => GetPokemonUseCase(di.get()));
+  //asdasdasasdasdasdasdkasdkaskdd//asdasdasasdasdasdasdkasdkaskdd//asdasdasasdasdasdasdkasdkaskdd//asdasdasasdasdasdasdkasdkaskdd
+  //asdasdasasdasdasdasdkasdkaskdd//asdasdasasdasdasdasdkasdkaskdd//asdasdasasdasdasdasdkasdkaskdd
 //asdasdasd
   di.registerLazySingleton<HomeController>(
       () => HomeController(di.get(), di.get()));
